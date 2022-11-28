@@ -1,6 +1,7 @@
 package com.decathlon.platform.interfaces;
 
 import com.decathlon.platform.interfaces.facade.OrderServiceFacade;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,7 @@ public class OrderController {
         this.orderServiceFacade = orderServiceFacade;
     }
 
-    @PostMapping("/order")
+    @GetMapping("/order")
     public String createOrder() {
         orderServiceFacade.createOrder("brian", "520667");
         return "ok";

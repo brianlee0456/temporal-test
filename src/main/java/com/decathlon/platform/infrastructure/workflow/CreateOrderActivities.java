@@ -9,7 +9,9 @@ import io.temporal.activity.ActivityInterface;
 @ActivityInterface
 public interface CreateOrderActivities {
 
-    void createOrder(String customerId,String itemId);
+    String createOrder(String customerId,String itemId);
+
+    void cancelOrder(String orderId);
 
     void useCoupon(String customerId);
 

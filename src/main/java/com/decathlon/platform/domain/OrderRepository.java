@@ -13,7 +13,12 @@ public class OrderRepository {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderRepository.class);
 
-    public void saveOrder(Order order){
-        LOGGER.info("Order {} saved.",order.getOrderId());
+    public String saveOrder(Order order) {
+        LOGGER.info("Order {} saved.", order.getOrderId());
+        return order.getOrderId();
+    }
+
+    public void cancelOrder(String orderId) {
+        LOGGER.info("Order {} canceled.", orderId);
     }
 }

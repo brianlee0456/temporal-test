@@ -5,12 +5,13 @@ import com.decathlon.platform.infrastructure.remote.CouponClient;
 import com.decathlon.platform.infrastructure.remote.EnergyPointClient;
 import com.decathlon.platform.infrastructure.remote.StockClient;
 import com.decathlon.platform.starter.temporal.WorkflowUtil;
-import io.temporal.client.WorkflowClient;
 import io.temporal.client.WorkflowOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.time.Duration;
 
 /**
  * @author: Brian
@@ -32,10 +33,18 @@ public class WorkflowConfig {
             , EnergyPointClient energyPointClient, StockClient stockClient) {
         WorkflowOptions options = WorkflowOptions.newBuilder()
                 .setTaskQueue(CREATE_ORDER_QUEUE)
+                //whole progress
+                .setWorkflowExecutionTimeout(Duration.ofHours(10))
+                //one invocation
+                .setWorkflowRunTimeout(Duration.ofHours(10))
                 .build();
+
         CreateOrderWorkflow postToCheckoutWorkflow = workflowUtil.workflowInstance(
                 CreateOrderWorkflow.class, options);
 
+        //CreateOrderWorkflowImpl
+        //CreateOrderWorkflowAsyncImpl
+        //CreateOrderWorkflowSagaImpl
         workflowUtil.registerWorker(CREATE_ORDER_QUEUE, CreateOrderWorkflowImpl.class
                 , new CreateOrderActivitiesImpl(orderService, couponClient, energyPointClient, stockClient));
 

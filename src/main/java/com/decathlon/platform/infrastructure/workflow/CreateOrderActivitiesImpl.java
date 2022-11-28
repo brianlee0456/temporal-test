@@ -25,8 +25,13 @@ public class CreateOrderActivitiesImpl implements CreateOrderActivities {
     }
 
     @Override
-    public void createOrder(String customerId, String itemId) {
-        orderService.createOrder(customerId, itemId);
+    public String createOrder(String customerId, String itemId) {
+        return orderService.createOrder(customerId, itemId);
+    }
+
+    @Override
+    public void cancelOrder(String orderId) {
+        orderService.cancelOrder(orderId);
     }
 
     @Override

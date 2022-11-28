@@ -19,8 +19,12 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public void createOrder(String userId,String itemId){
+    public String createOrder(String userId,String itemId){
         Order order = new Order(UUID.randomUUID().toString(), userId, itemId);
-        orderRepository.saveOrder(order);
+        return orderRepository.saveOrder(order);
+    }
+
+    public void cancelOrder(String orderId){
+        orderRepository.cancelOrder(orderId);
     }
 }
