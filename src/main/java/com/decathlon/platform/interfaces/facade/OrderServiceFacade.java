@@ -1,11 +1,8 @@
 package com.decathlon.platform.interfaces.facade;
 
-import com.decathlon.platform.infrastructure.workflow.CreateOrderWorkflow;
-import io.temporal.client.WorkflowClient;
+import com.decathlon.platform.infrastructure.workflow.order.CreateOrderWorkflow;
+import com.decathlon.platform.infrastructure.workflow.order.CreateOrderWorkflowFactory;
 import org.springframework.stereotype.Service;
-
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 /**
  * @author: Brian
@@ -14,11 +11,12 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class OrderServiceFacade {
 
-    private final CreateOrderWorkflow createOrderWorkflow;
+    private final CreateOrderWorkflowFactory createOrderWorkflowFactory;
 
-    public OrderServiceFacade(CreateOrderWorkflow createOrderWorkflow) {
-        this.createOrderWorkflow = createOrderWorkflow;
+    public OrderServiceFacade(CreateOrderWorkflowFactory createOrderWorkflowFactory) {
+        this.createOrderWorkflowFactory = createOrderWorkflowFactory;
     }
+
 
     public void createOrder(String customerId, String itemId) {
 //        CompletableFuture<Void> result = WorkflowClient.execute(createOrderWorkflow::createOrder, customerId, itemId, 100);
@@ -27,6 +25,7 @@ public class OrderServiceFacade {
 //        } catch (InterruptedException | ExecutionException e) {
 //            e.printStackTrace();
 //        }
+        CreateOrderWorkflow createOrderWorkflow = createOrderWorkflowFactory.create();
         createOrderWorkflow.createOrder(customerId, itemId, 100);
     }
 }

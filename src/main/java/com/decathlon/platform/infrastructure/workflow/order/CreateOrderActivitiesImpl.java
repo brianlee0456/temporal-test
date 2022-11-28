@@ -1,4 +1,4 @@
-package com.decathlon.platform.infrastructure.workflow;
+package com.decathlon.platform.infrastructure.workflow.order;
 
 import com.decathlon.platform.applications.OrderService;
 import com.decathlon.platform.infrastructure.remote.CouponClient;
@@ -56,6 +56,7 @@ public class CreateOrderActivitiesImpl implements CreateOrderActivities {
 
     @Override
     public void decreaseStock(String itemId) {
+        int a = 1/0;
         stockClient.decreaseStock(itemId);
     }
 

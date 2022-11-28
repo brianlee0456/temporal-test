@@ -4,14 +4,10 @@ import com.decathlon.platform.applications.OrderService;
 import com.decathlon.platform.infrastructure.remote.CouponClient;
 import com.decathlon.platform.infrastructure.remote.EnergyPointClient;
 import com.decathlon.platform.infrastructure.remote.StockClient;
+import com.decathlon.platform.infrastructure.workflow.order.CreateOrderWorkflowFactory;
 import com.decathlon.platform.starter.temporal.WorkflowUtil;
-import io.temporal.client.WorkflowOptions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.time.Duration;
 
 /**
  * @author: Brian
@@ -19,37 +15,10 @@ import java.time.Duration;
  */
 @Configuration
 public class WorkflowConfig {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WorkflowConfig.class);
-    private static final String CREATE_ORDER_QUEUE = "CREATE_ORDER_QUEUE";
-
-    private final WorkflowUtil workflowUtil;
-
-    public WorkflowConfig(WorkflowUtil workflowUtil) {
-        this.workflowUtil = workflowUtil;
-    }
-
     @Bean
-    public CreateOrderWorkflow createOrderWorkflow(OrderService orderService, CouponClient couponClient
-            , EnergyPointClient energyPointClient, StockClient stockClient) {
-        WorkflowOptions options = WorkflowOptions.newBuilder()
-                .setTaskQueue(CREATE_ORDER_QUEUE)
-                //whole progress
-                .setWorkflowExecutionTimeout(Duration.ofHours(10))
-                //one invocation
-                .setWorkflowRunTimeout(Duration.ofHours(10))
-                .build();
-
-        CreateOrderWorkflow postToCheckoutWorkflow = workflowUtil.workflowInstance(
-                CreateOrderWorkflow.class, options);
-
-        //CreateOrderWorkflowImpl
-        //CreateOrderWorkflowAsyncImpl
-        //CreateOrderWorkflowSagaImpl
-        workflowUtil.registerWorker(CREATE_ORDER_QUEUE, CreateOrderWorkflowImpl.class
-                , new CreateOrderActivitiesImpl(orderService, couponClient, energyPointClient, stockClient));
-
-        workflowUtil.workerStart();
-        LOGGER.info("Worker started for task queue " + CREATE_ORDER_QUEUE);
-        return postToCheckoutWorkflow;
+    public CreateOrderWorkflowFactory createOrderWorkflowFactory(WorkflowUtil workflowUtil, OrderService orderService
+            , CouponClient couponClient, EnergyPointClient energyPointClient, StockClient stockClient) {
+        return new CreateOrderWorkflowFactory(workflowUtil, orderService
+                , couponClient, energyPointClient, stockClient);
     }
 }

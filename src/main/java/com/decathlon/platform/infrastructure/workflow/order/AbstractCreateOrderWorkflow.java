@@ -1,4 +1,4 @@
-package com.decathlon.platform.infrastructure.workflow;
+package com.decathlon.platform.infrastructure.workflow.order;
 
 import io.temporal.activity.ActivityOptions;
 import io.temporal.common.RetryOptions;
@@ -18,12 +18,12 @@ public abstract class AbstractCreateOrderWorkflow implements CreateOrderWorkflow
 
     protected final CreateOrderActivities activities =
             Workflow.newActivityStub(CreateOrderActivities.class, ActivityOptions.newBuilder()
-//                            .setRetryOptions(RetryOptions.newBuilder()
-//                                    .setInitialInterval(Duration.ofSeconds(1))
-//                                    .setMaximumInterval(Duration.ofSeconds(60))
-//                                    .setMaximumAttempts(1)
-//                                    .setDoNotRetry(NullPointerException.class.getName())
-//                                    .build())
+                            .setRetryOptions(RetryOptions.newBuilder()
+                                    .setInitialInterval(Duration.ofSeconds(1))
+                                    .setMaximumInterval(Duration.ofSeconds(60))
+                                    .setMaximumAttempts(1)
+                                    .setDoNotRetry(NullPointerException.class.getName())
+                                    .build())
                     .setStartToCloseTimeout(Duration.ofSeconds(3))
                     .build());
 }

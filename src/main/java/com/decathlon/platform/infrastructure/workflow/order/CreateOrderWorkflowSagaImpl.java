@@ -1,4 +1,4 @@
-package com.decathlon.platform.infrastructure.workflow;
+package com.decathlon.platform.infrastructure.workflow.order;
 
 import io.temporal.failure.ActivityFailure;
 import io.temporal.workflow.Saga;
@@ -16,6 +16,7 @@ public class CreateOrderWorkflowSagaImpl extends AbstractCreateOrderWorkflow {
         Saga saga = new Saga(sagaOptions);
         try {
             String orderId = activities.createOrder(customerId, itemId);
+            LOGGER.info("Implements create order {} workflow with saga.", orderId);
             saga.addCompensation(activities::cancelOrder, orderId);
 
             activities.useCoupon(customerId);

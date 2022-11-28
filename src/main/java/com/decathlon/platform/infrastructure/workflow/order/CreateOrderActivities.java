@@ -1,4 +1,4 @@
-package com.decathlon.platform.infrastructure.workflow;
+package com.decathlon.platform.infrastructure.workflow.order;
 
 import io.temporal.activity.ActivityInterface;
 

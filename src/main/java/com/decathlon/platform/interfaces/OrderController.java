@@ -2,6 +2,7 @@ package com.decathlon.platform.interfaces;
 
 import com.decathlon.platform.interfaces.facade.OrderServiceFacade;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,9 +19,9 @@ public class OrderController {
         this.orderServiceFacade = orderServiceFacade;
     }
 
-    @GetMapping("/order")
-    public String createOrder() {
-        orderServiceFacade.createOrder("brian", "520667");
+    @GetMapping("/order/{itemId}")
+    public String createOrder(@PathVariable String itemId) {
+        orderServiceFacade.createOrder("brian", itemId);
         return "ok";
     }
 
