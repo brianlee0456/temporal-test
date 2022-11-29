@@ -14,11 +14,14 @@ public class StockClient {
     private final Logger LOGGER = LoggerFactory.getLogger(StockClient.class);
 
     public void decreaseStock(String itemId) {
-        itemId.isEmpty();
         LOGGER.info("Decrease stock to item {}", itemId);
     }
 
     public void increaseStock(String itemId) {
         LOGGER.info("Increase stock to item {}", itemId);
+    }
+
+    public String checkStock(String storeId, String itemId, int count) {
+        return storeId;
     }
 }

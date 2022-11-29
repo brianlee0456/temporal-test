@@ -56,7 +56,6 @@ public class CreateOrderActivitiesImpl implements CreateOrderActivities {
 
     @Override
     public void decreaseStock(String itemId) {
-        int a = 1/0;
         stockClient.decreaseStock(itemId);
     }
 

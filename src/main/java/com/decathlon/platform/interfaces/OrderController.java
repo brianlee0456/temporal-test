@@ -3,7 +3,6 @@ package com.decathlon.platform.interfaces;
 import com.decathlon.platform.interfaces.facade.OrderServiceFacade;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -25,4 +24,13 @@ public class OrderController {
         return "ok";
     }
 
+    @GetMapping("/checkstock/{itemId}")
+    public String checkStock(@PathVariable String itemId, int count) {
+        return orderServiceFacade.checkStock(itemId,count);
+    }
+
+    @GetMapping("/notify")
+    public int notifyAccount(){
+        return orderServiceFacade.notifyAccounts();
+    }
 }
