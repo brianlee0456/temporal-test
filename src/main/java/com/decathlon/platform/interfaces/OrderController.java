@@ -30,7 +30,8 @@ public class OrderController {
     }
 
     @GetMapping("/notify")
-    public int notifyAccount(){
-        return orderServiceFacade.notifyAccounts();
+    public String notifyAccount(){
+        orderServiceFacade.notifyAccounts();
+        return "ok";
     }
 }

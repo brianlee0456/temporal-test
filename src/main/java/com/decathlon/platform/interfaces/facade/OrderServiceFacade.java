@@ -46,7 +46,7 @@ public class OrderServiceFacade {
         return checkStockWorkflow.checkStock(itemId,count);
     }
 
-    public int notifyAccounts(){
+    public void notifyAccounts(){
         NotifyWorkflow notifyWorkflow = notifyWorkflowFactory.create();
         notifyWorkflow.notifyAccounts(List.of(
                 Account.of("Brian")
@@ -56,6 +56,5 @@ public class OrderServiceFacade {
                 ,Account.of("James")
                 ,Account.of("Sunny")
         ));
-        return notifyWorkflow.count();
     }
 }
