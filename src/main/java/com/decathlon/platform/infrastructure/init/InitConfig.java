@@ -1,5 +1,6 @@
 package com.decathlon.platform.infrastructure.init;
 
+import com.decathlon.platform.infrastructure.workflow.price.ChangePriceWorkflowStarter;
 import com.decathlon.platform.starter.temporal.WorkflowUtil;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -20,6 +21,11 @@ public class InitConfig implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+//        scheduledTaskStart();
         workflowUtil.workerStart();
+    }
+
+    private void scheduledTaskStart() {
+        new ChangePriceWorkflowStarter(workflowUtil).start();
     }
 }
